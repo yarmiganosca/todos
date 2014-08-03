@@ -10,20 +10,22 @@ class TasksController < ApplicationController
   end
 
   def create
-    task = Task.create(params)
+    task = Task.new(task_params)
+    task.save
 
     render_task(task)
   end
 
   def update
-    task = Task.find(params[:id]).update(params)
+    task = Task.find(params[:id])
+    task.update(task_params)
 
     render_task(task)
   end
 
   private
 
-  def render_task
+  def render_task(task)
     respond_to do |format|
       format.json do
         if task.valid?
@@ -33,5 +35,9 @@ class TasksController < ApplicationController
         end
       end
     end
+  end
+
+  def task_params
+    params.permit(:completed, :text)
   end
 end

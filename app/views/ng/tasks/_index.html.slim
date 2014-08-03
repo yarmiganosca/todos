@@ -1,0 +1,31 @@
+.app
+  section
+    header.header
+      h1 Task List
+
+      form.task-form(ng-submit="addTask()")
+        input.new-task(placeholder="What needs to be done?" ng-model="newTaskText" autofocus)
+
+    section.task-list(ng-show="tasks.length" ng-cloak)
+      input.toggle-all(type="checkbox" ng-model="allCompleted" ng-click="markAll(allCompleted)")
+      label(for="toggle-all") Mark all as completed
+
+      ul.task-list
+        task(ng-repeat="task in tasks | filter:statusFilter track by $index" task="task")
+
+    footer.footer(ng-show="tasks.length" ng-cloak)
+      span.task-count.active
+        strong
+          = "{{activeCount}}"
+        ng-pluralize(count="activeCount" when="{one: ' task left', other: ' tasks left'}")
+
+      ul.filters
+        li
+          a(ng-class="{selected: status == ''}" href="#/") All
+        li
+          a(ng-class="{selected: status == 'active'}" href="#/active") Active
+        li
+          a(ng-class="{selected: status == 'completed'}" href="#/completed") Completed
+
+  footer.info
+    p Click to edit a task

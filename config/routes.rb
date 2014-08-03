@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  scope :api do
-    resources :tasks, only: [:index, :create, :update]
-  end
+  root to: "home#index"
+
+  resources :tasks, only: [:index, :create, :update]
 end
